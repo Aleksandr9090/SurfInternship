@@ -6,7 +6,7 @@
 //
 
 struct MainViewModel {
-    let categories: [String]
+    let specialties: [String]
 }
 
 final class MainPresenter {
@@ -28,15 +28,15 @@ extension MainPresenter: MainViewOutputProtocol {
     }
     
     func viewDidLoad() {
-        interactor.getCategories()
+        interactor.getSpecialties()
     }
 }
 
 // MARK: - CategoriesInteractorOutputProtocol
 extension MainPresenter: MainInteractorOutputProtocol {
-    func categoriesDidReceive(_ categories: [String]) {
-        let categoriesViewModel = MainViewModel(categories: categories)
-        view?.setCategories(categoriesViewModel: categoriesViewModel)
+    func specialtiesDidReceive(_ specialties: [String]) {
+        let specialtiesViewModel = MainViewModel(specialties: specialties)
+        view?.setSpecialties(specialtiesViewModel: specialtiesViewModel)
     }
 }
 

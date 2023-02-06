@@ -6,17 +6,17 @@
 //
 
 protocol  MainInteractorInputProtocol: AnyObject {
-    func getCategories()
+    func getSpecialties()
 }
 
 protocol MainInteractorOutputProtocol: AnyObject {
-    func categoriesDidReceive(_ categories: [String])
+    func specialtiesDidReceive(_ specialties: [String])
 }
 
 final class MainInteractor: MainInteractorInputProtocol {
     weak var presenter: MainInteractorOutputProtocol?
     
-    func getCategories() {
-        
+    func getSpecialties() {
+        self.presenter?.specialtiesDidReceive(DataManager.shared.specialties)
     }
 }

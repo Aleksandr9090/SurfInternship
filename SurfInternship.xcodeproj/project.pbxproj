@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0CFE83298E92DC009FDF9F /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CFE82298E92DC009FDF9F /* MainTableViewCell.swift */; };
+		1F0CFE85298F7F61009FDF9F /* FirstCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0CFE84298F7F61009FDF9F /* FirstCollectionViewCell.swift */; };
+		1F1923712990D28900D887CC /* SecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1923702990D28900D887CC /* SecondCollectionViewCell.swift */; };
+		1F1923732991197D00D887CC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1923722991197D00D887CC /* DataManager.swift */; };
+		1F1923752991316300D887CC /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1923742991316300D887CC /* CollectionViewModel.swift */; };
+		1F19237729917D9200D887CC /* CollectionCellAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19237629917D9200D887CC /* CollectionCellAutoLayout.swift */; };
 		1FC832C9298CD64000F8F33E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC832C8298CD64000F8F33E /* AppDelegate.swift */; };
 		1FC832CB298CD64000F8F33E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC832CA298CD64000F8F33E /* SceneDelegate.swift */; };
 		1FC832CD298CD64000F8F33E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC832CC298CD64000F8F33E /* MainViewController.swift */; };
@@ -21,6 +27,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0CFE82298E92DC009FDF9F /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		1F0CFE84298F7F61009FDF9F /* FirstCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F1923702990D28900D887CC /* SecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F1923722991197D00D887CC /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		1F1923742991316300D887CC /* CollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewModel.swift; sourceTree = "<group>"; };
+		1F19237629917D9200D887CC /* CollectionCellAutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCellAutoLayout.swift; sourceTree = "<group>"; };
 		1FC832C5298CD64000F8F33E /* SurfInternship.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SurfInternship.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FC832C8298CD64000F8F33E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FC832CA298CD64000F8F33E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +89,12 @@
 				1FC832D6298CD64300F8F33E /* Info.plist */,
 				1FC832E2298CEBCD00F8F33E /* MainConfigurator.swift */,
 				1FC832E4298CEC8800F8F33E /* Extension + Array.swift */,
+				1F0CFE82298E92DC009FDF9F /* MainTableViewCell.swift */,
+				1F0CFE84298F7F61009FDF9F /* FirstCollectionViewCell.swift */,
+				1F1923702990D28900D887CC /* SecondCollectionViewCell.swift */,
+				1F1923722991197D00D887CC /* DataManager.swift */,
+				1F1923742991316300D887CC /* CollectionViewModel.swift */,
+				1F19237629917D9200D887CC /* CollectionCellAutoLayout.swift */,
 			);
 			path = SurfInternship;
 			sourceTree = "<group>";
@@ -158,8 +176,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FC832CD298CD64000F8F33E /* MainViewController.swift in Sources */,
+				1F1923712990D28900D887CC /* SecondCollectionViewCell.swift in Sources */,
+				1F1923752991316300D887CC /* CollectionViewModel.swift in Sources */,
 				1FC832E5298CEC8800F8F33E /* Extension + Array.swift in Sources */,
 				1FC832C9298CD64000F8F33E /* AppDelegate.swift in Sources */,
+				1F0CFE85298F7F61009FDF9F /* FirstCollectionViewCell.swift in Sources */,
+				1F0CFE83298E92DC009FDF9F /* MainTableViewCell.swift in Sources */,
+				1F19237729917D9200D887CC /* CollectionCellAutoLayout.swift in Sources */,
+				1F1923732991197D00D887CC /* DataManager.swift in Sources */,
 				1FC832CB298CD64000F8F33E /* SceneDelegate.swift in Sources */,
 				1FC832DF298CEAE300F8F33E /* MainInteractor.swift in Sources */,
 				1FC832E3298CEBCD00F8F33E /* MainConfigurator.swift in Sources */,
