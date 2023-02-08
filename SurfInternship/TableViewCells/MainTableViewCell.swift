@@ -7,39 +7,58 @@
 
 import UIKit
 
+// MARK: - Appearance
+extension MainTableViewCell {
+    struct Appearance {
+        let titleLabelTextColor = UIColor(red: 0.192, green: 0.192, blue: 0.192, alpha: 1)
+        let titleLabelText = "Стажировка в Surf"
+        let titleLabelFont = UIFont.boldSystemFont(ofSize: 24)
+        
+        let descriptionLabelTextColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
+        let descriptionLabelFont = UIFont.systemFont(ofSize: 14)
+        let firstDescriptionLabelText = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты."
+        let secondDescriptionLabelText = "Получай стипендию, выстраивай удобный график, работай на современном железе."
+    }
+}
+
 final class MainTableViewCell: UITableViewCell {
     // MARK: - Property
     static let identifier = "mainCell"
 
     private var firstCollectionView: UICollectionView!
     private var secondCollectionView: UICollectionView!
+    private let appearance = Appearance()
+    
+    private var secondCellsState: [Bool] = []
+    
+//    var completion: (() -> ())?
     
     var specialties: [String] = []
     
     // MARK: - Views
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.192, green: 0.192, blue: 0.192, alpha: 1)
-        label.font = .boldSystemFont(ofSize: 24)
-        label.text = "Стажировка в Surf"
+        label.textColor = appearance.titleLabelTextColor
+        label.font = appearance.titleLabelFont
+        label.text = appearance.titleLabelText
         return label
     }()
     
     private lazy var firstDescriptionLabel: UILabel = {
         let view = UILabel()
-        view.textColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
-        view.font = .systemFont(ofSize: 14)
+        view.textColor = appearance.descriptionLabelTextColor
+        view.font = appearance.descriptionLabelFont
         view.numberOfLines = 0
-        view.text = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты. "
+        view.text = appearance.firstDescriptionLabelText
         return view
     }()
     
     private lazy var secondDescriptionLabel: UILabel = {
         let view = UILabel()
-        view.textColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
-        view.font = .systemFont(ofSize: 14)
+        view.textColor = appearance.descriptionLabelTextColor
+        view.font = appearance.descriptionLabelFont
         view.numberOfLines = 0
-        view.text = "Получай стипендию, выстраивай удобный график, работай на современном железе."
+        view.text = appearance.secondDescriptionLabelText
         return view
     }()
     
@@ -52,41 +71,26 @@ final class MainTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
-    // MARK: - LifeCycle
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-//        nameLabel.text = nil
-//        dateLabel.text = nil
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
-    // MARK: - PublicMethods
+}
+
+// MARK: - Fileprivate methods
+fileprivate extension MainTableViewCell {
     func setupUI() {
         firstCollectionViewConfiguration()
         secondCollectionViewConfiguration()
         addSubviews()
-//        makeConstraints()
+        makeConstraints()
     }
     
-    func configureCell() {}
-    
     func firstCollectionViewConfiguration() {
-
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         firstCollectionView = UICollectionView(
             frame: contentView.bounds,
             collectionViewLayout: layout
         )
-        
-//        firstCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        upCollectionView.selectItem(at: <#T##IndexPath?#>, animated: <#T##Bool#>, scrollPosition: <#T##UICollectionView.ScrollPosition#>)
+
         firstCollectionView.isScrollEnabled = true
         firstCollectionView.dataSource = self
         firstCollectionView.delegate = self
@@ -97,10 +101,6 @@ final class MainTableViewCell: UITableViewCell {
     }
     
     func secondCollectionViewConfiguration() {
-//        let columnLayout = CustomViewFlowLayout()
-//        columnLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        
-//        let layout = CustomViewFlowLayout()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
 //        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
@@ -108,7 +108,6 @@ final class MainTableViewCell: UITableViewCell {
             frame: contentView.bounds,
             collectionViewLayout: layout
         )
-//        secondCollectionView.alignmentRectInsets = .init(from: <#T##Decoder#>)
         secondCollectionView.isScrollEnabled = true
         secondCollectionView.dataSource = self
         secondCollectionView.delegate = self
@@ -117,15 +116,16 @@ final class MainTableViewCell: UITableViewCell {
         secondCollectionView.showsHorizontalScrollIndicator = false
         secondCollectionView.register(SecondCollectionViewCell.self, forCellWithReuseIdentifier: SecondCollectionViewCell.identifier)
     }
-    
-    // MARK: - Private Methods
-    private func addSubviews() {
+
+    func addSubviews() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(firstDescriptionLabel)
         contentView.addSubview(firstCollectionView)
         contentView.addSubview(secondDescriptionLabel)
         contentView.addSubview(secondCollectionView)
-        
+    }
+    
+    func makeConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.leading.equalToSuperview().offset(24)
@@ -161,8 +161,9 @@ final class MainTableViewCell: UITableViewCell {
             make.height.equalTo(100)
         }
     }
+    
+    
 }
-
 
 // MARK: - UICollectionViewCompositionalLayout
 extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
@@ -173,10 +174,6 @@ extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
             return CGSize(width: specialties[indexPath.row].count * 10 + 48, height: 44)
         }
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        8
-//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == firstCollectionView {
@@ -197,7 +194,6 @@ extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
     }
 }
 
-
 // MARK: - UICollectionViewDataSource
 extension MainTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -214,7 +210,6 @@ extension MainTableViewCell: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             firstCell.button.setTitle(specialties[indexPath.row], for: .normal)
-            firstCell.cellConfiguration()
             
             return firstCell
         } else {
@@ -225,8 +220,9 @@ extension MainTableViewCell: UICollectionViewDataSource {
             else {
                 return UICollectionViewCell()
             }
-            secondCell.button.setTitle(specialties[indexPath.row], for: .normal)
-            secondCell.cellConfiguration()
+            secondCell.label.text = specialties[indexPath.row]
+            secondCell.cellTappedState = secondCellState
+//            secondCell.button.setTitle(specialties[indexPath.row], for: .normal)
             return secondCell
         }
     }
@@ -235,14 +231,11 @@ extension MainTableViewCell: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        cellTapCallback?(indexPath.row)
-
+        if collectionView == firstCollectionView {
+            firstCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
+        } else {
+            secondCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
+//            secondCellState.toggle()
+        }
     }
 }
-
-//// MARK: - MainTableViewCellTableViewCellDelegate
-//extension MainTableViewCell: MainTableViewCellDelegate {
-//    func didSelectTapAvatar(id: Int) {
-//        self.delegate?.didSelectTapAvatar(id: id)
-//    }
-//}

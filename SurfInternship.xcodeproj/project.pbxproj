@@ -24,6 +24,11 @@
 		1FC832E3298CEBCD00F8F33E /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC832E2298CEBCD00F8F33E /* MainConfigurator.swift */; };
 		1FC832E5298CEC8800F8F33E /* Extension + Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC832E4298CEC8800F8F33E /* Extension + Array.swift */; };
 		1FC832E8298CF68300F8F33E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC832E7298CF68300F8F33E /* SnapKit */; };
+		1FDDCDDB2992A6F40053224F /* MainViewInputProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDCDDA2992A6F40053224F /* MainViewInputProtocol.swift */; };
+		1FDDCDDD2992A7520053224F /* MainViewOutputProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDCDDC2992A7520053224F /* MainViewOutputProtocol.swift */; };
+		1FDDCDE32992A8460053224F /* MainInteractorInputProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDCDE22992A8460053224F /* MainInteractorInputProtocol.swift */; };
+		1FDDCDE52992A8630053224F /* MainInteractorOutputProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDCDE42992A8630053224F /* MainInteractorOutputProtocol.swift */; };
+		1FDDCDE72992A8860053224F /* MainConfiguratorInputProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDCDE62992A8860053224F /* MainConfiguratorInputProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +50,11 @@
 		1FC832E0298CEB3A00F8F33E /* MainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEntity.swift; sourceTree = "<group>"; };
 		1FC832E2298CEBCD00F8F33E /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
 		1FC832E4298CEC8800F8F33E /* Extension + Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Array.swift"; sourceTree = "<group>"; };
+		1FDDCDDA2992A6F40053224F /* MainViewInputProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewInputProtocol.swift; sourceTree = "<group>"; };
+		1FDDCDDC2992A7520053224F /* MainViewOutputProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewOutputProtocol.swift; sourceTree = "<group>"; };
+		1FDDCDE22992A8460053224F /* MainInteractorInputProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorInputProtocol.swift; sourceTree = "<group>"; };
+		1FDDCDE42992A8630053224F /* MainInteractorOutputProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorOutputProtocol.swift; sourceTree = "<group>"; };
+		1FDDCDE62992A8860053224F /* MainConfiguratorInputProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfiguratorInputProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,23 +90,100 @@
 			children = (
 				1FC832C8298CD64000F8F33E /* AppDelegate.swift */,
 				1FC832CA298CD64000F8F33E /* SceneDelegate.swift */,
-				1FC832CC298CD64000F8F33E /* MainViewController.swift */,
-				1FC832DC298CEAC900F8F33E /* MainPresenter.swift */,
-				1FC832DE298CEAE300F8F33E /* MainInteractor.swift */,
-				1FC832E0298CEB3A00F8F33E /* MainEntity.swift */,
+				1FDDCDE02992A7D70053224F /* Configrator */,
+				1FDDCDD92992A6DC0053224F /* ViewController */,
+				1FDDCDDE2992A7AD0053224F /* Presenter */,
+				1FDDCDDF2992A7BC0053224F /* Interactor */,
+				1FDDCDE12992A8050053224F /* Entity */,
 				1FC832D1298CD64300F8F33E /* Assets.xcassets */,
 				1FC832D3298CD64300F8F33E /* LaunchScreen.storyboard */,
 				1FC832D6298CD64300F8F33E /* Info.plist */,
-				1FC832E2298CEBCD00F8F33E /* MainConfigurator.swift */,
-				1FC832E4298CEC8800F8F33E /* Extension + Array.swift */,
-				1F0CFE82298E92DC009FDF9F /* MainTableViewCell.swift */,
-				1F0CFE84298F7F61009FDF9F /* FirstCollectionViewCell.swift */,
-				1F1923702990D28900D887CC /* SecondCollectionViewCell.swift */,
-				1F1923722991197D00D887CC /* DataManager.swift */,
+				1FDDCDD329929DDC0053224F /* Extensions */,
+				1FDDCDD629929E580053224F /* TableViewCells */,
+				1FDDCDD529929E340053224F /* CollectionViewCells */,
+				1FDDCDD429929E120053224F /* Managers */,
 				1F1923742991316300D887CC /* CollectionViewModel.swift */,
 				1F19237629917D9200D887CC /* CollectionCellAutoLayout.swift */,
 			);
 			path = SurfInternship;
+			sourceTree = "<group>";
+		};
+		1FDDCDD329929DDC0053224F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832E4298CEC8800F8F33E /* Extension + Array.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1FDDCDD429929E120053224F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1F1923722991197D00D887CC /* DataManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1FDDCDD529929E340053224F /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1F0CFE84298F7F61009FDF9F /* FirstCollectionViewCell.swift */,
+				1F1923702990D28900D887CC /* SecondCollectionViewCell.swift */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		1FDDCDD629929E580053224F /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1F0CFE82298E92DC009FDF9F /* MainTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		1FDDCDD92992A6DC0053224F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832CC298CD64000F8F33E /* MainViewController.swift */,
+				1FDDCDDA2992A6F40053224F /* MainViewInputProtocol.swift */,
+				1FDDCDDC2992A7520053224F /* MainViewOutputProtocol.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		1FDDCDDE2992A7AD0053224F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832DC298CEAC900F8F33E /* MainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1FDDCDDF2992A7BC0053224F /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832DE298CEAE300F8F33E /* MainInteractor.swift */,
+				1FDDCDE22992A8460053224F /* MainInteractorInputProtocol.swift */,
+				1FDDCDE42992A8630053224F /* MainInteractorOutputProtocol.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		1FDDCDE02992A7D70053224F /* Configrator */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832E2298CEBCD00F8F33E /* MainConfigurator.swift */,
+				1FDDCDE62992A8860053224F /* MainConfiguratorInputProtocol.swift */,
+			);
+			path = Configrator;
+			sourceTree = "<group>";
+		};
+		1FDDCDE12992A8050053224F /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				1FC832E0298CEB3A00F8F33E /* MainEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,13 +267,18 @@
 				1F1923752991316300D887CC /* CollectionViewModel.swift in Sources */,
 				1FC832E5298CEC8800F8F33E /* Extension + Array.swift in Sources */,
 				1FC832C9298CD64000F8F33E /* AppDelegate.swift in Sources */,
+				1FDDCDDD2992A7520053224F /* MainViewOutputProtocol.swift in Sources */,
 				1F0CFE85298F7F61009FDF9F /* FirstCollectionViewCell.swift in Sources */,
 				1F0CFE83298E92DC009FDF9F /* MainTableViewCell.swift in Sources */,
 				1F19237729917D9200D887CC /* CollectionCellAutoLayout.swift in Sources */,
 				1F1923732991197D00D887CC /* DataManager.swift in Sources */,
+				1FDDCDE52992A8630053224F /* MainInteractorOutputProtocol.swift in Sources */,
 				1FC832CB298CD64000F8F33E /* SceneDelegate.swift in Sources */,
+				1FDDCDDB2992A6F40053224F /* MainViewInputProtocol.swift in Sources */,
 				1FC832DF298CEAE300F8F33E /* MainInteractor.swift in Sources */,
 				1FC832E3298CEBCD00F8F33E /* MainConfigurator.swift in Sources */,
+				1FDDCDE72992A8860053224F /* MainConfiguratorInputProtocol.swift in Sources */,
+				1FDDCDE32992A8460053224F /* MainInteractorInputProtocol.swift in Sources */,
 				1FC832DD298CEAC900F8F33E /* MainPresenter.swift in Sources */,
 				1FC832E1298CEB3B00F8F33E /* MainEntity.swift in Sources */,
 			);

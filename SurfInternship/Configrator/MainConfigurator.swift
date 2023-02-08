@@ -5,10 +5,6 @@
 //  Created by Aleksandr on 03.02.2023.
 //
 
-protocol MainConfiguratorInputProtocol {
-    func configure(withView view: MainViewController)
-}
-
 final class MainConfigurator: MainConfiguratorInputProtocol {
     func configure(withView view: MainViewController) {
         let interactor = MainInteractor()

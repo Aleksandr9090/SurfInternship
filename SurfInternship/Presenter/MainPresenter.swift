@@ -23,10 +23,6 @@ final class MainPresenter {
 extension MainPresenter: MainViewOutputProtocol {
     func favoriteButtonPressed() {}
     
-    func didTapCell(with category: String) {
-        
-    }
-    
     func viewDidLoad() {
         interactor.getSpecialties()
     }

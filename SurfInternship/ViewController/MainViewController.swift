@@ -8,13 +8,15 @@
 import UIKit
 import SnapKit
 
-protocol MainViewInputProtocol: AnyObject {
-    func setSpecialties(specialtiesViewModel: MainViewModel)
-}
-
-protocol MainViewOutputProtocol {
-    func viewDidLoad()
-    func didTapCell(with category: String)
+extension MainViewController {
+    struct Appearance {
+        let barButtonTitle = "Отправить заявку"
+        let backgroundImage = UIImage(named: "background")
+        let subTitleColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
+        let questionLabelText = "Хочешь к нам?"
+        let alertTitle = "Поздравляем!"
+        let alertDescription = "Ваша заявка успешно отправлена!"
+    }
 }
 
 final class MainViewController: UIViewController {
@@ -23,8 +25,7 @@ final class MainViewController: UIViewController {
     
     private let tableView = UITableView.init(frame: .zero)
     private let configurator: MainConfiguratorInputProtocol = MainConfigurator()
-//    private var collectionViewModel: CollectionViewModelProtocol = CollectionViewModel()
-
+    private let appearance = Appearance()
     private var specialties: [String] = []
     
     private lazy var barView: UIView = {
@@ -35,24 +36,25 @@ final class MainViewController: UIViewController {
         
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "background")
+        imageView.image = appearance.backgroundImage
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private lazy var barButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Отправить заявку", for: .normal)
+        button.setTitle(appearance.barButtonTitle, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return button
     }()
     
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
-        label.font = UIFont(name: "SFProDisplay-Regular", size: 14)
-        label.text = "Хочешь к нам?"
+        label.textColor = appearance.subTitleColor
+        label.font = .systemFont(ofSize: 14)
+        label.text = appearance.questionLabelText
         return label
     }()
     
@@ -85,12 +87,11 @@ final class MainViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
-//        tableView.isScrollEnabled = true
         tableView.bounces = false
         tableView.showsVerticalScrollIndicator = false
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(imageView)
         view.addSubview(tableView)
         view.addSubview(barView)
@@ -121,31 +122,33 @@ final class MainViewController: UIViewController {
         
         questionLabel.snp.makeConstraints { make in
             make.top.equalTo(barView)
-            make.trailing.equalTo(barButton.snp.leading).offset(-20)
+            make.trailing.equalTo(barButton.snp.leading).offset(-24)
             make.height.equalTo(60)
         }
     }
     
-    private func setupNavigationBar() {
-//        navigationController?.preferredContentSize =
+    @objc private func buttonAction() {
+        showAlert()
+    }
+    
+    private func setupNavigationBar() { }
+    
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: appearance.alertTitle,
+            message: appearance.alertDescription,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        
+        present(alert, animated: true, completion: nil)
     }
     
 }
 
 // MARK: - TableViewDelegate
-extension MainViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        presenter?.didTapCell(with: categories[safe: indexPath.row] ?? "all")
-//    }
-//
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
-//        UIView.animate(withDuration: 0.5, delay: 0.05 * Double(indexPath.row)) {
-//            cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
-//        }
-//    }
-}
+extension MainViewController: UITableViewDelegate {}
 
 // MARK: - TableViewDataSource
 extension MainViewController: UITableViewDataSource {
