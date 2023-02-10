@@ -13,11 +13,11 @@ class DataManager {
         "Android",
         "Design",
         "Flutter",
+        "QA",
         "Backend",
         "Frontend",
         "Retail",
         "Media",
-        "M-commerce",
         "FinTech",
     ]
        

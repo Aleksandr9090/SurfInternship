@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FirstCollectionViewCellDelegate {
+    func scrollToPosition(indexPath: IndexPath)
+}
+
 // MARK: - Appearance
 extension MainTableViewCell {
     struct Appearance {
@@ -29,12 +33,8 @@ final class MainTableViewCell: UITableViewCell {
     private var secondCollectionView: UICollectionView!
     private let appearance = Appearance()
     
-    private var secondCellsState: [Bool] = []
-    
-//    var completion: (() -> ())?
-    
     var specialties: [String] = []
-    
+
     // MARK: - Views
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -84,6 +84,7 @@ fileprivate extension MainTableViewCell {
     }
     
     func firstCollectionViewConfiguration() {
+//        let layout = CustomViewFlowLayout()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         firstCollectionView = UICollectionView(
@@ -103,7 +104,6 @@ fileprivate extension MainTableViewCell {
     func secondCollectionViewConfiguration() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-//        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         secondCollectionView = UICollectionView(
             frame: contentView.bounds,
             collectionViewLayout: layout
@@ -161,20 +161,18 @@ fileprivate extension MainTableViewCell {
             make.height.equalTo(100)
         }
     }
-    
-    
 }
 
 // MARK: - UICollectionViewCompositionalLayout
 extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == firstCollectionView {
-            return CGSize(width: specialties[indexPath.row].count * 10 + 48, height: 44)
+            return CGSize(width: specialties[indexPath.row].count * 8 + 48, height: 44)
         } else {
-            return CGSize(width: specialties[indexPath.row].count * 10 + 48, height: 44)
+            return CGSize(width: specialties[indexPath.row].count * 8 + 48, height: 44)
         }
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == firstCollectionView {
             return UIEdgeInsets(
@@ -209,7 +207,9 @@ extension MainTableViewCell: UICollectionViewDataSource {
             else {
                 return UICollectionViewCell()
             }
-            firstCell.button.setTitle(specialties[indexPath.row], for: .normal)
+            firstCell.button.setTitle(specialties[safe: indexPath.row], for: .normal)
+            firstCell.delegate = self
+            firstCell.indexPath = indexPath
             
             return firstCell
         } else {
@@ -220,22 +220,15 @@ extension MainTableViewCell: UICollectionViewDataSource {
             else {
                 return UICollectionViewCell()
             }
-            secondCell.label.text = specialties[indexPath.row]
-            secondCell.cellTappedState = secondCellState
-//            secondCell.button.setTitle(specialties[indexPath.row], for: .normal)
+            secondCell.button.setTitle(specialties[safe: indexPath.row], for: .normal)
             return secondCell
         }
     }
 }
 
-// MARK: - UICollectionViewDelegate
-extension MainTableViewCell: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == firstCollectionView {
-            firstCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
-        } else {
-            secondCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
-//            secondCellState.toggle()
-        }
+// MARK: - FirstCollectionViewDelegate
+extension MainTableViewCell: FirstCollectionViewCellDelegate {
+    func scrollToPosition(indexPath: IndexPath) {
+        firstCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
     }
 }

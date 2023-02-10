@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+// MARK: - Appearance
 extension MainViewController {
     struct Appearance {
         let barButtonTitle = "Отправить заявку"
@@ -20,7 +21,7 @@ extension MainViewController {
 }
 
 final class MainViewController: UIViewController {
-    
+    // MARK: - Property
     var presenter: MainViewOutputProtocol?
     
     private let tableView = UITableView.init(frame: .zero)
@@ -28,12 +29,13 @@ final class MainViewController: UIViewController {
     private let appearance = Appearance()
     private var specialties: [String] = []
     
+    // MARK: - Views
     private lazy var barView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
-        
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = appearance.backgroundImage
@@ -47,6 +49,7 @@ final class MainViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.setTitleColor(.purple, for: .highlighted)
         return button
     }()
     
@@ -67,7 +70,6 @@ final class MainViewController: UIViewController {
         
         setupTableView()
         view.backgroundColor = .clear
-        setupNavigationBar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,9 +81,11 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
-    
-    // MARK: - PrivateMethods
-    private func setupTableView() {
+}
+
+// MARK: - Filerivate Methods
+fileprivate extension MainViewController {
+    func setupTableView() {
         view.addSubview(tableView)
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
         tableView.delegate = self
@@ -91,14 +95,14 @@ final class MainViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
     }
     
-    private func addSubviews() {
+    func addSubviews() {
         view.addSubview(imageView)
         view.addSubview(tableView)
         view.addSubview(barView)
         view.addSubview(barButton)
         view.addSubview(questionLabel)
         
-        tableView.frame = view.bounds
+        tableView.frame = view.frame
         imageView.snp.makeConstraints { make in
             make.top.equalTo(view).offset(-view.frame.height / 5)
             make.leading.equalTo(view).offset(-view.frame.height / 5)
@@ -106,11 +110,20 @@ final class MainViewController: UIViewController {
             make.bottom.equalTo(view)
         }
         
-        barView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.bottom).offset(-98)
-            make.leading.equalTo(view)
-            make.trailing.equalTo(view)
-            make.bottom.equalTo(view).offset(view.frame.height / 5)
+        if tableView.frame.height > 736 {
+            barView.snp.makeConstraints { make in
+                make.top.equalTo(view.snp.bottom).offset(-98)
+                make.leading.equalTo(view)
+                make.trailing.equalTo(view)
+                make.bottom.equalTo(view).offset(view.frame.height / 5)
+            }
+        } else {
+            barView.snp.makeConstraints { make in
+                make.top.equalTo(view.snp.bottom).offset(-76)
+                make.leading.equalTo(view)
+                make.trailing.equalTo(view)
+                make.bottom.equalTo(view).offset(view.frame.height / 5)
+            }
         }
         
         barButton.snp.makeConstraints { make in
@@ -127,24 +140,20 @@ final class MainViewController: UIViewController {
         }
     }
     
-    @objc private func buttonAction() {
+    @objc func buttonAction() {
         showAlert()
     }
     
-    private func setupNavigationBar() { }
-    
-    private func showAlert() {
+    func showAlert() {
         let alert = UIAlertController(
             title: appearance.alertTitle,
             message: appearance.alertDescription,
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
-        
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .default))
         present(alert, animated: true, completion: nil)
     }
-    
 }
 
 // MARK: - TableViewDelegate
@@ -160,6 +169,7 @@ extension MainViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()}
         
         cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         cell.contentView.backgroundColor = .white
         cell.contentView.layer.cornerRadius = 30
         cell.specialties = specialties
@@ -167,7 +177,11 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        tableView.frame.height * 0.33
+        if tableView.frame.height > 736 {
+            return tableView.frame.height - 530 - (navigationController?.navigationBar.frame.height ?? 0)
+        } else {
+            return tableView.frame.height - 480 - (navigationController?.navigationBar.frame.height ?? 0)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -177,7 +191,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableView.frame.height - 80
+        tableView.frame.height - (view.window?.safeAreaInsets.bottom ?? 0) / 2 - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
     }
 }
 

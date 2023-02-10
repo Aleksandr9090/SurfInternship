@@ -1,5 +1,5 @@
 //
-//  UpCollectionViewCell.swift
+//  FirstCollectionViewCell.swift
 //  SurfInternship
 //
 //  Created by Aleksandr on 05.02.2023.
@@ -18,11 +18,15 @@ extension FirstCollectionViewCell {
     }
 }
 
-class FirstCollectionViewCell: UICollectionViewCell {
+final class FirstCollectionViewCell: UICollectionViewCell {
     // MARK: - Property
-    static let identifier = "upCollectionViewCell"
+    static let identifier = "firstCollectionViewCell"
     
-    private var buttonState: Bool = false
+    var delegate: FirstCollectionViewCellDelegate?
+    var indexPath: IndexPath?
+    
+    private var buttonState = false
+    
     private let appearance = Appearance()
     
     // MARK: - Views
@@ -33,9 +37,10 @@ class FirstCollectionViewCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.setTitleColor(appearance.buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 12
-
+        button.setTitleColor(.red, for: .highlighted)
         return button
     }()
+
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -54,14 +59,14 @@ class FirstCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        buttonState = false
     }
     
     @objc private func buttonAction() {
-        buttonState.toggle()
-        changeButton(state: buttonState)
+        guard let indexPath = indexPath else { return }
+        delegate?.scrollToPosition(indexPath: indexPath)
+        changeButton()
     }
-                         
 }
 
 // MARK: - fileprivate FirstCollectionViewCell
@@ -84,8 +89,9 @@ fileprivate extension FirstCollectionViewCell {
         }
     }
     
-    func changeButton(state: Bool) {
-        if state == true {
+    func changeButton() {
+        buttonState.toggle()
+        if buttonState == true {
             button.backgroundColor = appearance.buttonTappedBackgroundColor
             button.setTitleColor(appearance.buttonTappedTitleColor, for: .normal)
         } else  {
