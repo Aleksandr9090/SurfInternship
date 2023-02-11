@@ -9,4 +9,4 @@ Technology stack:
 VIPER<br>SnapKit<br>Swift Package Manager<br>
 </h4>
 
-![](https://github.com/Aleksandr9090/SurfInternship/commit/c4719745b1aa86ea29aacb78c7e97b298842f7bc)
+![](https://github.com/Aleksandr9090/SurfInternship/blob/main/Surf_for_GIF.gif)
