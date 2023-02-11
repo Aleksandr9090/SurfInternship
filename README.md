@@ -8,3 +8,5 @@ Technology stack:
 <h4>
 VIPER<br>SnapKit<br>Swift Package Manager<br>
 </h4>
+
+![](https://github.com/Aleksandr9090/SurfInternship/blob/main/Surf_for_GIF.mov)
