@@ -54,7 +54,6 @@ final class SecondCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-//        buttonState = false
     }
 }
 
@@ -66,14 +65,14 @@ fileprivate extension SecondCollectionViewCell {
     
     func configure() {
         addSubview()
-        layout()
+        makeConstraints()
     }
     
     func addSubview() {
         contentView.addSubview(button)
     }
     
-    func layout() {
+    func makeConstraints() {
         button.snp.makeConstraints { make in
             make.top.equalTo(contentView)
             make.leading.equalTo(contentView).offset(6)

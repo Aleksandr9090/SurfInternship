@@ -69,25 +69,26 @@ final class MainViewController: UIViewController {
         presenter?.viewDidLoad()
         
         setupTableView()
+        addSubviews()
+        makeConstraints()
+        
         view.backgroundColor = .clear
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        addSubviews()
         barButton.layer.cornerRadius = barButton.frame.height / 2
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
     }
 }
 
 // MARK: - Filerivate Methods
 fileprivate extension MainViewController {
     func setupTableView() {
-        view.addSubview(tableView)
-        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
+        tableView.register(
+            MainTableViewCell.self,
+            forCellReuseIdentifier: MainTableViewCell.identifier
+        )
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
@@ -96,13 +97,17 @@ fileprivate extension MainViewController {
     }
     
     func addSubviews() {
+        view.addSubview(tableView)
         view.addSubview(imageView)
         view.addSubview(tableView)
         view.addSubview(barView)
         view.addSubview(barButton)
         view.addSubview(questionLabel)
-        
+    }
+    
+    func makeConstraints() {
         tableView.frame = view.frame
+        
         imageView.snp.makeConstraints { make in
             make.top.equalTo(view).offset(-view.frame.height / 5)
             make.leading.equalTo(view).offset(-view.frame.height / 5)
@@ -199,6 +204,5 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: MainViewInputProtocol {
     func setSpecialties(specialtiesViewModel: MainViewModel) {
         self.specialties = specialtiesViewModel.specialties
-        tableView.reloadData()
     }
 }

@@ -73,14 +73,14 @@ final class FirstCollectionViewCell: UICollectionViewCell {
 fileprivate extension FirstCollectionViewCell {
     func configure() {
         addSubview()
-        layout()
+        makeConstraints()
     }
     
     func addSubview() {
         contentView.addSubview(button)
     }
     
-    func layout() {
+    func makeConstraints() {
         button.snp.makeConstraints { make in
             make.top.equalTo(contentView)
             make.leading.equalTo(contentView).offset(6)

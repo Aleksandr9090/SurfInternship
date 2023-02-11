@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - FirstCollectionViewCellDelegate
 protocol FirstCollectionViewCellDelegate {
     func scrollToPosition(indexPath: IndexPath)
 }
@@ -71,7 +72,6 @@ final class MainTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
-    
 }
 
 // MARK: - Fileprivate methods
@@ -97,23 +97,30 @@ fileprivate extension MainTableViewCell {
         firstCollectionView.backgroundColor = .clear
         firstCollectionView.bounces = false
         firstCollectionView.showsHorizontalScrollIndicator = false
-        firstCollectionView.register(FirstCollectionViewCell.self, forCellWithReuseIdentifier: FirstCollectionViewCell.identifier)
+        firstCollectionView.register(
+            FirstCollectionViewCell.self,
+            forCellWithReuseIdentifier: FirstCollectionViewCell.identifier
+        )
     }
     
     func secondCollectionViewConfiguration() {
-        let layout = UICollectionViewFlowLayout()
+        let layout = LeftAlignedHorizontalCollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         secondCollectionView = UICollectionView(
             frame: contentView.bounds,
             collectionViewLayout: layout
         )
+        
         secondCollectionView.isScrollEnabled = true
         secondCollectionView.dataSource = self
         secondCollectionView.delegate = self
         secondCollectionView.backgroundColor = .clear
         secondCollectionView.bounces = false
         secondCollectionView.showsHorizontalScrollIndicator = false
-        secondCollectionView.register(SecondCollectionViewCell.self, forCellWithReuseIdentifier: SecondCollectionViewCell.identifier)
+        secondCollectionView.register(
+            SecondCollectionViewCell.self,
+            forCellWithReuseIdentifier: SecondCollectionViewCell.identifier
+        )
     }
 
     func addSubviews() {
@@ -162,10 +169,12 @@ fileprivate extension MainTableViewCell {
     }
     
     func sizeOfString (string: String) -> CGSize {
-        return NSString(string: string).boundingRect(with: CGSize(width: 0, height: 0),
-                                                     options: .usesFontLeading,
-                                                     attributes: [.font: UIFont.systemFont(ofSize: 14)],
-                                                     context: nil).size
+        return NSString(string: string).boundingRect(
+            with: CGSize(width: 0, height: 0),
+            options: .usesFontLeading,
+            attributes: [.font: UIFont.systemFont(ofSize: 14)],
+            context: nil
+        ).size
     }
 }
 
@@ -173,7 +182,7 @@ fileprivate extension MainTableViewCell {
 extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let text = specialties[indexPath.row]
+        guard let text = specialties[safe: indexPath.row] else { return CGSize()}
         return CGSize(width: sizeOfString(string: text).width + 48, height: 44)
     }
         
