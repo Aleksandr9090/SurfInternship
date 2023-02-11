@@ -84,7 +84,6 @@ fileprivate extension MainTableViewCell {
     }
     
     func firstCollectionViewConfiguration() {
-//        let layout = CustomViewFlowLayout()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         firstCollectionView = UICollectionView(
@@ -161,16 +160,21 @@ fileprivate extension MainTableViewCell {
             make.height.equalTo(100)
         }
     }
+    
+    func sizeOfString (string: String) -> CGSize {
+        return NSString(string: string).boundingRect(with: CGSize(width: 0, height: 0),
+                                                     options: .usesFontLeading,
+                                                     attributes: [.font: UIFont.systemFont(ofSize: 14)],
+                                                     context: nil).size
+    }
 }
 
 // MARK: - UICollectionViewCompositionalLayout
 extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == firstCollectionView {
-            return CGSize(width: specialties[indexPath.row].count * 8 + 48, height: 44)
-        } else {
-            return CGSize(width: specialties[indexPath.row].count * 8 + 48, height: 44)
-        }
+        
+        let text = specialties[indexPath.row]
+        return CGSize(width: sizeOfString(string: text).width + 48, height: 44)
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
