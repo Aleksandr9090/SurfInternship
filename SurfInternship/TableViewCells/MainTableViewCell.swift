@@ -8,8 +8,8 @@
 import UIKit
 
 // MARK: - FirstCollectionViewCellDelegate
-protocol FirstCollectionViewCellDelegate {
-    func scrollToPosition(indexPath: IndexPath)
+protocol BubbleCollectionViewCellDelegate {
+    func cellDidTap(indexPath: IndexPath, isSelected: Bool, collectionViewIndex: Int)
 }
 
 // MARK: - Appearance
@@ -34,7 +34,8 @@ final class MainTableViewCell: UITableViewCell {
     private var secondCollectionView: UICollectionView!
     private let appearance = Appearance()
     
-    var specialties: [String] = []
+    private var firstSpecialties: [Specialty] = []
+    private var secondSpecialties: [Specialty] = []
 
     // MARK: - Views
     private lazy var titleLabel: UILabel = {
@@ -72,11 +73,22 @@ final class MainTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
+    
+    // MARK: - Iternal
+    func configure(firstSpecialties: [Specialty], secondSpecialties: [Specialty]) {
+        self.firstSpecialties = firstSpecialties
+        self.secondSpecialties = secondSpecialties
+    }
 }
 
 // MARK: - Fileprivate methods
-fileprivate extension MainTableViewCell {
+private extension MainTableViewCell {
     func setupUI() {
+        backgroundColor = .clear
+        selectionStyle = .none
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 30
+
         firstCollectionViewConfiguration()
         secondCollectionViewConfiguration()
         addSubviews()
@@ -95,11 +107,10 @@ fileprivate extension MainTableViewCell {
         firstCollectionView.dataSource = self
         firstCollectionView.delegate = self
         firstCollectionView.backgroundColor = .clear
-        firstCollectionView.bounces = false
         firstCollectionView.showsHorizontalScrollIndicator = false
         firstCollectionView.register(
-            FirstCollectionViewCell.self,
-            forCellWithReuseIdentifier: FirstCollectionViewCell.identifier
+            BubbleCollectionViewCell.self,
+            forCellWithReuseIdentifier: BubbleCollectionViewCell.identifier
         )
     }
     
@@ -115,11 +126,10 @@ fileprivate extension MainTableViewCell {
         secondCollectionView.dataSource = self
         secondCollectionView.delegate = self
         secondCollectionView.backgroundColor = .clear
-        secondCollectionView.bounces = false
         secondCollectionView.showsHorizontalScrollIndicator = false
         secondCollectionView.register(
-            SecondCollectionViewCell.self,
-            forCellWithReuseIdentifier: SecondCollectionViewCell.identifier
+            BubbleCollectionViewCell.self,
+            forCellWithReuseIdentifier: BubbleCollectionViewCell.identifier
         )
     }
 
@@ -181,67 +191,70 @@ fileprivate extension MainTableViewCell {
 // MARK: - UICollectionViewCompositionalLayout
 extension MainTableViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        guard let text = specialties[safe: indexPath.row] else { return CGSize()}
-        return CGSize(width: sizeOfString(string: text).width + 48, height: 44)
+        if collectionView == firstCollectionView {
+            guard let text = firstSpecialties[safe: indexPath.row]?.title else { return CGSize()}
+            return CGSize(width: sizeOfString(string: text).width + 48, height: 44)
+        } else {
+            guard let text = secondSpecialties[safe: indexPath.row]?.title else { return CGSize()}
+            return CGSize(width: sizeOfString(string: text).width + 48, height: 44)
+        }
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView == firstCollectionView {
             return UIEdgeInsets(
                 top: 0,
                 left: 16,
                 bottom: 0,
                 right: 16
-            )
-        } else {
-            return UIEdgeInsets(
-                top: 0,
-                left: 16,
-                bottom: 0,
-                right: 16
-            )
-        }
+                )
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension MainTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        specialties.count
+        if collectionView == firstCollectionView {
+            return firstSpecialties.count
+        } else {
+            return secondSpecialties.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == firstCollectionView {
             guard
                 let firstCell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: FirstCollectionViewCell.identifier,
-                    for: indexPath) as? FirstCollectionViewCell
+                    withReuseIdentifier: BubbleCollectionViewCell.identifier,
+                    for: indexPath) as? BubbleCollectionViewCell, let speciality = firstSpecialties[safe: indexPath.row]
             else {
                 return UICollectionViewCell()
             }
-            firstCell.button.setTitle(specialties[safe: indexPath.row], for: .normal)
-            firstCell.delegate = self
-            firstCell.indexPath = indexPath
+        
+            firstCell.configure(title: speciality.title, isSelected: speciality.isSelected, delegate: self, indexPath: indexPath, collectionViewIndex: 0)
             
             return firstCell
         } else {
             guard
                 let secondCell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: SecondCollectionViewCell.identifier,
-                    for: indexPath) as? SecondCollectionViewCell
+                    withReuseIdentifier: BubbleCollectionViewCell.identifier,
+                    for: indexPath) as? BubbleCollectionViewCell, let speciality = firstSpecialties[safe: indexPath.row]
             else {
                 return UICollectionViewCell()
             }
-            secondCell.button.setTitle(specialties[safe: indexPath.row], for: .normal)
+            
+            secondCell.configure(title: speciality.title, isSelected: speciality.isSelected, delegate: self, indexPath: indexPath, collectionViewIndex: 1)
+
             return secondCell
         }
     }
 }
 
 // MARK: - FirstCollectionViewDelegate
-extension MainTableViewCell: FirstCollectionViewCellDelegate {
-    func scrollToPosition(indexPath: IndexPath) {
-        firstCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
+extension MainTableViewCell: BubbleCollectionViewCellDelegate {
+    func cellDidTap(indexPath: IndexPath, isSelected: Bool, collectionViewIndex: Int) {
+        firstSpecialties[indexPath.row].isSelected = isSelected
+        if collectionViewIndex == 0 {
+            firstCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
+        }
     }
 }

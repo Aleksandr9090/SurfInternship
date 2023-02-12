@@ -11,12 +11,12 @@ import SnapKit
 // MARK: - Appearance
 extension MainViewController {
     struct Appearance {
-        let barButtonTitle = "Отправить заявку"
-        let backgroundImage = UIImage(named: "background")
-        let subTitleColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
-        let questionLabelText = "Хочешь к нам?"
-        let alertTitle = "Поздравляем!"
-        let alertDescription = "Ваша заявка успешно отправлена!"
+        static let barButtonTitle = "Отправить заявку"
+        static let backgroundImage = UIImage(named: "background")
+        static let subTitleColor = UIColor(red: 0.588, green: 0.584, blue: 0.608, alpha: 1)
+        static let questionLabelText = "Хочешь к нам?"
+        static let alertTitle = "Поздравляем!"
+        static let alertDescription = "Ваша заявка успешно отправлена!"
     }
 }
 
@@ -26,8 +26,7 @@ final class MainViewController: UIViewController {
     
     private let tableView = UITableView.init(frame: .zero)
     private let configurator: MainConfiguratorInputProtocol = MainConfigurator()
-    private let appearance = Appearance()
-    private var specialties: [String] = []
+    private var specialties: [Specialty] = []
     
     // MARK: - Views
     private lazy var barView: UIView = {
@@ -38,14 +37,14 @@ final class MainViewController: UIViewController {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = appearance.backgroundImage
+        imageView.image = Appearance.backgroundImage
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private lazy var barButton: UIButton = {
         let button = UIButton()
-        button.setTitle(appearance.barButtonTitle, for: .normal)
+        button.setTitle(Appearance.barButtonTitle, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -55,9 +54,9 @@ final class MainViewController: UIViewController {
     
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
-        label.textColor = appearance.subTitleColor
+        label.textColor = Appearance.subTitleColor
         label.font = .systemFont(ofSize: 14)
-        label.text = appearance.questionLabelText
+        label.text = Appearance.questionLabelText
         return label
     }()
     
@@ -82,7 +81,7 @@ final class MainViewController: UIViewController {
 }
 
 // MARK: - Filerivate Methods
-fileprivate extension MainViewController {
+private extension MainViewController {
     func setupTableView() {
         tableView.register(
             MainTableViewCell.self,
@@ -151,8 +150,8 @@ fileprivate extension MainViewController {
     
     func showAlert() {
         let alert = UIAlertController(
-            title: appearance.alertTitle,
-            message: appearance.alertDescription,
+            title: Appearance.alertTitle,
+            message: Appearance.alertDescription,
             preferredStyle: .alert
         )
         
@@ -162,24 +161,7 @@ fileprivate extension MainViewController {
 }
 
 // MARK: - TableViewDelegate
-extension MainViewController: UITableViewDelegate {}
-
-// MARK: - TableViewDataSource
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()}
-        
-        cell.backgroundColor = .clear
-        cell.selectionStyle = .none
-        cell.contentView.backgroundColor = .white
-        cell.contentView.layer.cornerRadius = 30
-        cell.specialties = specialties
-        return cell
-    }
+extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView.frame.height > 736 {
@@ -198,9 +180,29 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         tableView.frame.height - (view.window?.safeAreaInsets.bottom ?? 0) / 2 - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
     }
+    
 }
 
-// MARK: - CategoriesViewInputProtocol
+// MARK: - TableViewDataSource
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell
+        else { return UITableViewCell()}
+        
+        let firstSpecialties = self.specialties.filter { $0.collectionViewIndex == 0 }
+        let secondSpecialties = self.specialties.filter { $0.collectionViewIndex == 1 }
+        
+        cell.configure(firstSpecialties: firstSpecialties, secondSpecialties: secondSpecialties)
+        
+        return cell
+    }
+}
+
+// MARK: - MainViewInputProtocol
 extension MainViewController: MainViewInputProtocol {
     func setSpecialties(specialtiesViewModel: MainViewModel) {
         self.specialties = specialtiesViewModel.specialties

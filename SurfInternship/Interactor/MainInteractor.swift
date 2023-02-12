@@ -9,6 +9,6 @@ final class MainInteractor: MainInteractorInputProtocol {
     weak var presenter: MainInteractorOutputProtocol?
     
     func getSpecialties() {
-        self.presenter?.specialtiesDidReceive(DataManager.shared.specialties)
+        self.presenter?.specialtiesDidReceive(Specialty.specialtiesCollection)
     }
 }

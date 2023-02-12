@@ -6,5 +6,5 @@
 //
 
 protocol MainInteractorOutputProtocol: AnyObject {
-    func specialtiesDidReceive(_ specialties: [String])
+    func specialtiesDidReceive(_ specialties: [Specialty])
 }
