@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - FirstCollectionViewCellDelegate
+// MARK: - BubbleCollectionViewCellDelegate
 protocol BubbleCollectionViewCellDelegate {
     func cellDidTap(indexPath: IndexPath, isSelected: Bool, collectionViewIndex: Int)
 }
