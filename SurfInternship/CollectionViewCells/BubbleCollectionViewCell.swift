@@ -56,11 +56,6 @@ final class BubbleCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Iternal methods
- 
-}
-
-// MARK: - Private methods
-private extension BubbleCollectionViewCell {
     func configure(title: String, isSelected: Bool, delegate: MainTableViewCell, indexPath: IndexPath, collectionViewIndex: Int) {
         self.button.setTitle(title, for: .normal)
         self.buttonIsSelected = isSelected
@@ -68,7 +63,10 @@ private extension BubbleCollectionViewCell {
         self.indexPath = indexPath
         self.collectionViewIndex = collectionViewIndex
     }
-    
+}
+
+// MARK: - Private methods
+private extension BubbleCollectionViewCell {
     func setupUI() {
         addSubview()
         makeConstraints()
