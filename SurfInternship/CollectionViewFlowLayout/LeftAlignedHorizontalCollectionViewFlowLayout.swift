@@ -16,7 +16,7 @@ final class LeftAlignedHorizontalCollectionViewFlowLayout: UICollectionViewFlowL
        private func common() {
            scrollDirection = .horizontal
            minimumLineSpacing = 12
-           minimumInteritemSpacing = 12
+           minimumInteritemSpacing = 0
            sectionInset.left = 16
        }
        

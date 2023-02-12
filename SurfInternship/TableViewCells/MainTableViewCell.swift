@@ -97,12 +97,13 @@ private extension MainTableViewCell {
     
     func firstCollectionViewConfiguration() {
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
         firstCollectionView = UICollectionView(
             frame: contentView.bounds,
             collectionViewLayout: layout
         )
-
+        
         firstCollectionView.isScrollEnabled = true
         firstCollectionView.dataSource = self
         firstCollectionView.delegate = self
