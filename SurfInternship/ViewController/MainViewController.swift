@@ -139,7 +139,7 @@ private extension MainViewController {
         
         questionLabel.snp.makeConstraints { make in
             make.top.equalTo(barView)
-            make.trailing.equalTo(barButton.snp.leading).offset(-24)
+            make.leading.equalToSuperview().offset(20)
             make.height.equalTo(60)
         }
     }
