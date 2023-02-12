@@ -65,7 +65,7 @@ final class BubbleCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Fileprivate FirstCollectionViewCell
+// MARK: - Private methods
 private extension BubbleCollectionViewCell {
     func configure() {
         addSubview()

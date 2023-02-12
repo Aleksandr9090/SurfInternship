@@ -33,4 +33,3 @@ extension MainPresenter: MainInteractorOutputProtocol {
         view?.setSpecialties(specialtiesViewModel: specialtiesViewModel)
     }
 }
-

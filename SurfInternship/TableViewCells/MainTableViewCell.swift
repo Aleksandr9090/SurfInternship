@@ -249,7 +249,7 @@ extension MainTableViewCell: UICollectionViewDataSource {
     }
 }
 
-// MARK: - FirstCollectionViewDelegate
+// MARK: - BubbleCollectionViewCellDelegate
 extension MainTableViewCell: BubbleCollectionViewCellDelegate {
     func cellDidTap(indexPath: IndexPath, isSelected: Bool, collectionViewIndex: Int) {
         firstSpecialties[indexPath.row].isSelected = isSelected
